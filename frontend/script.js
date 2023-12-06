@@ -1,23 +1,22 @@
-
+const socket=io();
  let  b=document.getElementById('btn');
+ let  inputMsg=document.getElementById('1');
+
  b.addEventListener('click',function exe(){
-    const  inputMsg=document.getElementById('1').value;
- let a=document.createElement('he')
- a.innerText=inputMsg;
- document.getElementById('3').appendChild(a)
-   
+      socket.emit('from client',{
+        msg:inputMsg.value
+      })
     })
 
- const socket=io();
-
-socket.on('event from server',()=>{
-   console.log('emitting from server to client');
+socket.on('from server',(data)=>{
+    let a=document.createElement('he');
+    a.innerText=data;
+    document.getElementById('3').appendChild(a);
 })
 
 
-    setInterval(() => {
-        socket.emit('from client');
-    }, 3000);
+
+
 
 
 

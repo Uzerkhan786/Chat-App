@@ -3,20 +3,15 @@ const app=express();
 const {createServer}=require('node:http');
 const server=createServer(app);
 const {Server}=require('socket.io')
-const io=new Server(server, {
-  connectionStateRecovery: {}
-});
+const io=new Server(server);
 //console.log(io);
 
 
 io.on('connection',(socket)=>{
-  setInterval(() => {
-    socket.emit('event from server')
-
-  }, 2000); 
-
-  socket.on('from client',()=>{
-    console.log('from client to server');
+  socket.on('from client',(data)=>{
+         console.log(data);
+         //now we  are emitting the msg from server to client which we recieved from client
+         io.emit('from server',data);
   })
 })
 app.use('/',express.static(__dirname+'/frontend'))
